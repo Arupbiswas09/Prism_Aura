@@ -5,10 +5,10 @@ const BackgroundAnimation = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return; // Return early if the canvas is null
 
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) return; // Return early if the context is null
 
     const particles: Particle[] = [];
     const particleCount = 50;
@@ -41,6 +41,7 @@ const BackgroundAnimation = () => {
       }
 
       draw() {
+        if (!ctx) return; // Ensure ctx is not null
         ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -55,6 +56,8 @@ const BackgroundAnimation = () => {
     };
 
     const animate = () => {
+      if (!ctx) return; // Ensure ctx is not null
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach(particle => {
@@ -69,6 +72,7 @@ const BackgroundAnimation = () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < 100) {
+            if (!ctx) return; // Ensure ctx is not null
             ctx.beginPath();
             ctx.strokeStyle = `hsla(217, 91%, 60%, ${0.1 * (1 - distance/100)})`;
             ctx.lineWidth = 0.5;
